@@ -1,0 +1,7 @@
+.venv/
+.vscode/
+.sldata/
+
+build/
+dist/
+*.spec

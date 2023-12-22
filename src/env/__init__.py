@@ -11,4 +11,4 @@ AUTHOR = "numLinka"
 version_code = 2_2023_1222
 version_name = "0.2"
 
-MAIN_TITLE = f"{PROJECT_NAME} v{version_name} -by {AUTHOR}"
+MAIN_TITLE = f"{PROJECT} v{version_name} -by {AUTHOR}"

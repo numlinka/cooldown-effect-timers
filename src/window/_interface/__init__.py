@@ -47,6 +47,9 @@ class Interface (object):
 
 
     def initial(self):
-        self.roles.initial()
         self.cooldown.initial()
         module.clock.add_event(self.clock.add_clock_count)
+
+
+    def final_initial(self):
+        self.roles.final_initial()

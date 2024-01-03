@@ -3,6 +3,7 @@
 
 # site
 import ttkbootstrap
+from ttkbootstrap import dialogs
 
 # local
 import core
@@ -38,7 +39,7 @@ class RolesArms (object):
         self.wcb_role.bind("<<ComboboxSelected>>", self.set_role)
 
 
-    def initial(self):
+    def final_initial(self):
         self.wcb_role.config(values=[x for x in module.roles.roles_table])
         match self.serial:
             case 1: role_name = core.configuration.role_1
@@ -52,7 +53,12 @@ class RolesArms (object):
 
     def set_role(self, *_):
         value = self.wcb_role.get()
-        module.handle.set_role(self.serial, value)
+        try:
+            module.handle.set_role(self.serial, value)
+
+        except Exception as _:
+            dialogs.Messagebox.show_error(title="角色事件错误", message=f"角色 [{self.serial}] {value}\n加载失败")
+            self.wcb_role.set("")
 
 
 class Roles (object):
@@ -73,6 +79,6 @@ class Roles (object):
         self.wll_look_help.pack(side="bottom", fill="x", padx=5, pady=(0, 5))
 
 
-    def initial(self):
+    def final_initial(self):
         for wra in [self.wra_1, self.wra_2, self.wra_3, self.wra_4]:
-            wra.initial()
+            wra.final_initial()

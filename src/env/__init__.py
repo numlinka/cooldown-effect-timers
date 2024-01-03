@@ -8,7 +8,7 @@ PROJECT = "cooldown-effect-timers"
 PROJECT_NAME = "冷却效果计时器"
 AUTHOR = "numLinka"
 
-version_code = 3_2024_0103
-version_name = "0.3.0"
+version_code = 3001
+version_name = "0.3.1"
 
 MAIN_TITLE = f"{PROJECT} v{version_name} -by {AUTHOR}"

@@ -28,7 +28,7 @@ class Handle (object):
         if not isinstance(serial, int) or not 1 <= serial <= 4:
             raise ValueError("serial 必须是1到4之间的整数")
 
-        if role is None or (not isinstance(role, str) and not role):
+        if role is None or (isinstance(role, str) and not role):
             return
 
         if isinstance(role, str):

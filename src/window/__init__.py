@@ -71,7 +71,12 @@ def initial():
     # 高度(490) = 间距(60) * 最大效果数量(8) + 10
 
     interface.initial()
+    mainwindow.after(100, final_initial)
     mainwindow.after(1000, disable)
+
+
+def final_initial():
+    interface.final_initial()
 
 
 mainloop = mainwindow.mainloop

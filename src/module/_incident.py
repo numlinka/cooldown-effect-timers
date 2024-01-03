@@ -33,6 +33,7 @@ class Incident (object):
         if isinstance(key, pynput.keyboard.KeyCode):
             key = str(key)[1:-1]
 
+
         if not release:
             if key in ["1", "2", "3", "4"]:
                 # module.roleserial.set(int(key))
@@ -43,6 +44,9 @@ class Incident (object):
 
             elif key == "q":
                 module.handle.action_press_burst()
+
+            elif key == "110":
+                module.handle.action_reset()
 
         else:
             if key == "e":

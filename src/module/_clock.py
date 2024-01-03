@@ -9,13 +9,13 @@ import threading
 class Clock (object):
     def __init__(self, interval: float = 0.1):
         self._lock = threading.RLock()
-        self.internal_signal = threading.Event()
+        self.internal_semaphore = threading.Semaphore(0)
         self.interval = 0.1
         self.event_lst: list[threading.Event] = []
 
         self.set_interval(interval)
 
-        self.task_main = threading.Thread(None, self.mainloop_new, "Clock", (), daemon=True)
+        self.task_main = threading.Thread(None, self.mainloop, "Clock", (), daemon=True)
         self.task_optupt = threading.Thread(None, self.__external_loop, "Clock-optupt", (), daemon=True)
 
 
@@ -27,45 +27,48 @@ class Clock (object):
             self.interval = value
 
 
-    def add_event(self, event: threading.Event):
-        if not isinstance(event, threading.Event):
-            raise TypeError("The event type is not threading.Event.")
-        
+    def add_event(self, event: threading.Event | threading.Semaphore | object):
+        if not isinstance(event, (threading.Event, threading.Semaphore)) and not callable(event):
+            raise TypeError("The event type is not threading.Event or threading.Semaphore or callable.")
+
         with self._lock:
             self.event_lst.append(event)
 
 
     def __external_loop(self):
         while True:
-            self.internal_signal.wait()
-            self.internal_signal.clear()
+            self.internal_semaphore.acquire()
             with self._lock:
                 for event in self.event_lst:
                     try:
-                        event.set()
+                        if isinstance(event, threading.Event):
+                            event.clear()
+
+                        elif isinstance(event, threading.Semaphore):
+                            event.release()
+
+                        elif callable(event):
+                            event()
+
+                        else:
+                            ...
 
                     except Exception:
                         ...
 
 
     def mainloop(self):
-        while True:
-            self.internal_signal.set()
-            time.sleep(self.interval)
-
-
-    def mainloop_new(self):
-        start_timestamp = round(time.time(), 1)
+        start_timestamp = time.monotonic()
         tick = 0
         while True:
-            self.internal_signal.set()
+            self.internal_semaphore.release()
 
             tick += 1
-            now_timestamp = time.time()
+            now_timestamp = time.monotonic()
             end_timestamp = start_timestamp + self.interval * tick
             difference = end_timestamp - now_timestamp
 
-            if difference < 0:
+            if difference <= 0.0001:
                 continue
 
             time.sleep(difference)

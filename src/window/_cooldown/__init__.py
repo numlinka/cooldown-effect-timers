@@ -8,7 +8,7 @@ import ttkbootstrap
 import core
 import module
 import window
-from constant import *
+from constants import *
 from library.anchor_point import AnchorPoint
 
 

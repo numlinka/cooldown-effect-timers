@@ -18,51 +18,37 @@ class Handle (object):
         self.rolesobs = {index: roles.BaseRoleEvent() for index in range(1, 5)}
 
 
-    def set_role(self, serial: int, role: str | roles.BaseRoleEvent, *args):
+    def set_role(self, serial: int, role: str | roles.BaseRoleEvent, *args) -> None:
         """
         ## 设置角色
 
         serial: 指定角色序号 *必须
         role: 角色名称 或 角色事件类 ( 不是对象 )
         """
-        if role is None:
+        if not isinstance(serial, int) or not 1 <= serial <= 4:
+            raise ValueError("serial 必须是1到4之间的整数")
+
+        if role is None or (not isinstance(role, str) and not role):
             return
 
-        if not isinstance(serial, int):
-            raise TypeError
-
-        if not 1 <= serial <= 4:
-            raise ValueError
-
         if isinstance(role, str):
-            if role == "":
-                return
-
             if role not in roles.roles_table:
-                raise ValueError
+                raise ValueError(f"角色 {role} 不存在")
 
-            class_ = roles.roles_table[role]
+            role_class = roles.roles_table[role]
 
         else:
-            class_ = role
+            role_class = role
 
-        if not inspect.isclass(class_):
-            raise TypeError
+        if not inspect.isclass(role_class) or not issubclass(role_class, roles.BaseRoleEvent):
+            raise TypeError("如果 role 不是字符串，它必须是 BaseRoleEvent 的子类")
 
-        if not issubclass(class_, roles.BaseRoleEvent):
-            raise TypeError
-
-        unit = class_(module.cooldown, module.effectside, *args)
+        unit = role_class(module.cooldown, module.effectside, *args)
         unit: roles.BaseRoleEvent
         self.rolesobs[serial] = unit
 
         save_name = role if isinstance(role, str) else ""
-
-        match serial:
-            case 1: core.configuration.role_1.set(save_name)
-            case 2: core.configuration.role_2.set(save_name)
-            case 3: core.configuration.role_3.set(save_name)
-            case 4: core.configuration.role_4.set(save_name)
+        getattr(core.configuration, f"role_{serial}").set(save_name)
 
         # 后处理
         module.cooldown.set_skills_max_cd(unit.cd_skills, serial)
@@ -98,3 +84,8 @@ class Handle (object):
 
     def action_release_burst(self):
         self.rolesobs[self.now_role].release_burst()
+
+
+    def action_reset(self):
+        module.cooldown.reset()
+        module.effectside.clear_all_effect()

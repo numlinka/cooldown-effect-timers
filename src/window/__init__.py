@@ -12,7 +12,7 @@ from ttkbootstrap import dialogs
 # local
 import env
 import core
-from constant import *
+from constants import *
 
 # self
 from . import method
@@ -35,7 +35,7 @@ interface = Interface(mainwindow)
 
 
 def disable(*_):
-    end_date = "2024-01-01"
+    end_date = "2024-02-01"
     end_stamp = int(time.mktime(time.strptime(end_date, "%Y-%m-%d")))
     now_stamp = int(time.time())
     if end_stamp > now_stamp: return
@@ -46,6 +46,7 @@ def disable(*_):
 def initial():
     mainwindow.title(env.MAIN_TITLE)
     method.center_window(mainwindow, 500, 300, 1)
+    mainwindow.minsize(500, 300)
     method.set_window_icon(mainwindow, env.filepath.iconbitmap)
 
     window_cooldown.title("cooldown")

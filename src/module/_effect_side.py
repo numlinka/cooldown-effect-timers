@@ -309,6 +309,16 @@ class EffectSide (object):
         return len(lst)
 
 
+    def clear_all_effect(self):
+        """
+        ## 清除所有效果
+        """
+        with self._lock:
+            for iid, unit in self._effects.items():
+                unit: EffectUnit
+                unit.clear()
+
+
     def get(self) -> list[EffectUnit]:
         with self._lock:
             result = [self._effects[x] for x in self._effects]

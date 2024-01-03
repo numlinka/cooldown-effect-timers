@@ -69,6 +69,9 @@ class Roles (object):
         self.wra_3.pack(side="top", fill="x", padx=5, pady=(0, 5))
         self.wra_4.pack(side="top", fill="x", padx=5, pady=(0, 5))
 
+        self.wll_look_help = ttkbootstrap.Label(self.master, text="使用方法请查看 Help ( 帮助 ) 页面")
+        self.wll_look_help.pack(side="bottom", fill="x", padx=5, pady=(0, 5))
+
 
     def initial(self):
         for wra in [self.wra_1, self.wra_2, self.wra_3, self.wra_4]:

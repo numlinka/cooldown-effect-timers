@@ -262,6 +262,16 @@ class CoolDown (object):
     # ================================ base ================================
 
 
+    def reset(self):
+        """
+        ## 复位
+
+        重置所有冷却时间
+        """
+        [unit.clear() for unit in self.cd2u_skills_lst]
+        [unit.clear() for unit in self.cd2u_burst_lst]
+
+
     def _looptask(self):
         [unit.decrease() for unit in self.cd2u_skills_lst]
         # [unit.decrease() for unit in self.cd2uburst]

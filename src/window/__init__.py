@@ -57,8 +57,6 @@ def initial():
     window_cooldown.attributes("-topmost", True)
     site = f"+{core.configuration.window_cooldown_site_x}+{core.configuration.window_cooldown_site_y}"
     window_cooldown.geometry(site)
-    # 高度(328) = 间距(96) * 3 + 20 * 2
-
 
     window_effectside.title("effect")
     window_effectside.overrideredirect(True)
@@ -68,7 +66,6 @@ def initial():
     window_effectside.attributes("-topmost", True)
     site = f"+{core.configuration.window_effectside_site_x}+{core.configuration.window_effectside_site_y}"
     window_effectside.geometry(site)
-    # 高度(490) = 间距(60) * 最大效果数量(8) + 10
 
     interface.initial()
     mainwindow.after(100, final_initial)

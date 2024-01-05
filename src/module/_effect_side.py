@@ -5,14 +5,16 @@
 import threading
 
 # local
+import module
 import window
 
 
 
 class EffectUnit (object):
-    def __init__(self, name: str, value: int = 0):
+    def __init__(self, name: str, value: int = 0, serial: int = ...):
         self._lock = threading.RLock()
         self.name = ""
+        self.serial = 0 if serial is Ellipsis else serial
         self.now = 0
         self.max = 0
 
@@ -180,7 +182,7 @@ class EffectSide (object):
                 self._effect_name_iid.append(iid)
 
 
-    def add_effect(self, name: str, second: float):
+    def add_effect(self, name: str, second: float, serial: int = ...):
         """
         ## 添加效果
 
@@ -193,16 +195,20 @@ class EffectSide (object):
         if not isinstance(second, (int, float)):
             raise TypeError
 
-        iid = self._update_count()
+        if not isinstance(serial, int) and serial is not Ellipsis:
+            raise TypeError
 
-        unit = EffectUnit(name, second)
+        iid = self._update_count()
+        serial = serial if isinstance(serial, int) else module.handle.now_role
+
+        unit = EffectUnit(name, second, serial)
 
         with self._lock:
             self._effects[iid] = unit
             self._update_cache_list()
 
 
-    def set_effect(self, name: str, second: float = ..., much: int = ..., reverse: bool = False):
+    def set_effect(self, name: str, second: float = ..., much: int = ..., reverse: bool = False, serial: int = ...):
         """
         ## 设置效果
 
@@ -228,7 +234,7 @@ class EffectSide (object):
 
         with self._lock:
             if not self.exist(name):
-                self.add_effect(name, second)
+                self.add_effect(name, second, serial)
                 return
 
             _name_lst = self._effect_name_lst[::-1] if reverse else self._effect_name_lst.copy()
@@ -281,6 +287,43 @@ class EffectSide (object):
                 del self._effects[iid]
 
             self._update_cache_list()
+
+
+    def get_effect_second(self, name: str, indexed: int = 0, reverse: bool = False) -> float | int:
+        """
+        ## 获取效果持续时间
+
+        name: 效果名称
+        index: 要获取的索引 默认获取第一个效果
+        reverse: 反向查找 从列表末尾开始查找
+        """
+        if not isinstance(name, str):
+            raise TypeError
+
+        if not isinstance(indexed, int) and indexed is not Ellipsis:
+            raise TypeError
+
+        if indexed is not Ellipsis and indexed < 0:
+            return 0
+
+        with self._lock:
+            if not self.exist(name):
+                return 0
+
+            _name_lst = self._effect_name_lst[::-1] if reverse else self._effect_name_lst
+            _name_iid = self._effect_name_iid[::-1] if reverse else self._effect_name_iid
+
+            indices = [index for index, exname in enumerate(_name_lst) if name == exname]
+            indexed = indexed if indexed < len(indices) else len(indices) - 1
+
+            iid = _name_iid[indices[indexed]]
+
+            unit = self._effects[iid]
+            unit: EffectUnit
+            unit.now
+
+            return unit.now / 10
+
 
 
     def exist(self, name: str) -> bool:

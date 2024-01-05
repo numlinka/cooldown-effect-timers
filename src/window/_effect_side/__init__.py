@@ -9,6 +9,7 @@ import core
 import module
 import window
 from constants import *
+from constants import effect_site_mode as esm
 from library.anchor_point import AnchorPoint
 
 
@@ -19,7 +20,10 @@ class EffectSideWindow (object):
     def __init__(self, master: ttkbootstrap.Toplevel):
         self.master = master
         self.toggle = "odd"
-        self.anchorpoint = AnchorPoint((10, 10), (0, 60))
+        self.mode = str(core.configuration.window_effectside_mode)
+        self.amount = 8
+        self.baseline = False
+        self.anchorpoint: AnchorPoint
         self.initial()
 
 
@@ -32,7 +36,7 @@ class EffectSideWindow (object):
         self.canvas = ttkbootstrap.Canvas(self.master, background=TRANSPARENTCOLOR)
         self.canvas.pack(fill="both", expand=True)
 
-        self.set_spacing()
+        self.set_amount()
         window.method.motion_window_by_canvas(self.master, self.canvas, "motion", self.update_configuration)
 
 
@@ -42,6 +46,16 @@ class EffectSideWindow (object):
             "width": 0,
             "outline": "",
             "tags": "base"
+        }
+        return result
+    
+
+    def _kwds_baseline(self) -> dict:
+        result = {
+            "fill": COLOR,
+            "width": 0,
+            "outline": "",
+            "tags": "baseline"
         }
         return result
 
@@ -86,8 +100,28 @@ class EffectSideWindow (object):
 
 
     def canvas_update(self):
+        serial_count = {x: 0 for x in range(4)}
         for index, unit in enumerate(module.effectside.get()):
-            site = self.anchorpoint.coordinates(index)
+            serial = unit.serial - 1
+
+            match self.mode:
+                case esm.VERTICAL:
+                    site = self.anchorpoint.coordinates(index)
+
+                case esm.HORIZONTAL:
+                    site = self.anchorpoint.coordinates(index)
+
+                case esm.SERIAL_VERTICAL:
+                    site = self.anchorpoint.coordinates(serial, serial_count[serial])
+
+                case esm.SERUAL_HORIZONTAL:
+                    site = self.anchorpoint.coordinates(serial, serial_count[serial])
+
+                case _:
+                    site = self.anchorpoint.coordinates(index)
+
+            serial_count[serial] += 1
+
             schedule = int(200 * unit.now / unit.max) if unit.max != 0 else 200
 
             points_rectangle_outline = (site.x, site.y, site.x+220, site.y+50)
@@ -114,18 +148,94 @@ class EffectSideWindow (object):
         self.toggle = new_toggle
 
 
-    def set_spacing(self, value: int = 8):
+    def set_amount(self, value: int = 8, update: bool = True):
         if not isinstance(value, int):
             TypeError
 
         if value < 1:
             ValueError
 
-        # 高度(490) = 间距(60) * 最大效果数量(8) + 10
-        height = 60 * value + 10
-        self.master.geometry(f"240x{height}")
+        self.amount = value
+        if update: self.set_mode()
+
+
+    def set_mode(self, mode: str = ..., amount: int = ...):
+        mode = mode if mode in esm.ALLMODS else self.mode
+        self.mode = mode
+
+        if isinstance(amount, int): self.set_amount(amount, False)
+        amount = self.amount
+
+        width  = 0
+        height = 0
+
+        match mode:
+            case esm.VERTICAL :
+                width  = 10 + 230
+                height = 10 + 60  * amount
+                self.anchorpoint = AnchorPoint((10, 10), (0, 60))
+
+            case esm.HORIZONTAL:
+                width  = 10 + 230 * amount
+                height = 10 + 60
+                self.anchorpoint = AnchorPoint((10, 10), (230, 0))
+
+            case esm.SERIAL_VERTICAL:
+                width  = 10 + 230 * 4
+                height = 10 + 60  * amount
+                self.anchorpoint = AnchorPoint((10, 10), (230, 0), (0, 60))
+
+            case esm.SERUAL_HORIZONTAL:
+                width  = 10 + 230 * amount
+                height = 10 + 60  * 4
+                self.anchorpoint = AnchorPoint((10, 10), (0, 60), (230, 0))
+
+            case _:
+                width  = 10 + 230
+                height = 10 + 60
+                self.anchorpoint = AnchorPoint((10, 10), (60, 230), (60, 230))
+
+        self.master.geometry(f"{width}x{height}")
         self.canvas.delete("base")
-        self.canvas.create_rectangle(0, 0, 240, height, **self._kwds_base())
+        self.canvas.delete("baseline")
+        self.canvas.create_rectangle(0, 0, width, height, **self._kwds_base())
+        self.set_baseline(self.baseline)
+
+
+    def set_baseline(self, value: bool = False):
+        self.baseline = value
+
+        if value:
+            points = []
+
+            match self.mode:
+                case esm.VERTICAL:
+                    site = self.anchorpoint.coordinates()
+                    points.append((site.x, 0, site.x+220, 2))
+
+                case esm.HORIZONTAL:
+                    site = self.anchorpoint.coordinates()
+                    points.append((0, site.y, 2, site.y+50))
+
+                case esm.SERIAL_VERTICAL:
+                    for index in range(4):
+                        site = self.anchorpoint.coordinates(index)
+                        points.append((site.x, 0, site.x+220, 2))
+
+                case esm.SERUAL_HORIZONTAL:
+                    for index in range(4):
+                        site = self.anchorpoint.coordinates(index)
+                        points.append((0, site.y, 2, site.y+50))
+
+                case _:
+                    points = []
+
+            for point in points:
+                self.canvas.create_rectangle(*point, **self._kwds_baseline())
+
+        else:
+            self.canvas.delete("baseline")
+
 
 
     def moving_blocks(self, value: bool = True):

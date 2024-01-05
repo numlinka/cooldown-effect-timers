@@ -2,12 +2,15 @@
 # cooldown-effect-timers by numlinka.
 
 # site
+import webbrowser
 import ttkbootstrap
 from ttkbootstrap import dialogs
 
 # local
+import env
 import core
 import module
+from window import method
 
 
 class RolesArms (object):
@@ -36,7 +39,11 @@ class RolesArms (object):
         self.wbn_arms.pack(side="left", padx=(5, 0))
         self.pack = self.wfe.pack
 
-        self.wcb_role.bind("<<ComboboxSelected>>", self.set_role)
+        self.wcb_role.bind("<<ComboboxSelected>>", self.set_role, True)
+        self.wcb_role
+        method.combobox_do_not_want_selection(self.wcb_role)
+        method.combobox_do_not_want_selection(self.wcb_arms)
+
 
 
     def final_initial(self):
@@ -47,17 +54,21 @@ class RolesArms (object):
             case 3: role_name = core.configuration.role_3
             case 4: role_name = core.configuration.role_4
 
-        self.wcb_role.set(role_name)
-        self.set_role()
+        self.set_role(name=role_name)
 
 
-    def set_role(self, *_):
-        value = self.wcb_role.get()
+    def set_role(self, *_, name: str =...):
+        if isinstance(name, str):
+            self.wcb_role.set(name)
+
+        else:
+            name = self.wcb_role.get()
+
         try:
-            module.handle.set_role(self.serial, value)
+            module.handle.set_role(self.serial, name)
 
         except Exception as _:
-            dialogs.Messagebox.show_error(title="角色事件错误", message=f"角色 [{self.serial}] {value}\n加载失败")
+            dialogs.Messagebox.show_error(title="角色事件错误", message=f"角色 [{self.serial}] {name}\n加载失败")
             self.wcb_role.set("")
 
 
@@ -75,8 +86,15 @@ class Roles (object):
         self.wra_3.pack(side="top", fill="x", padx=5, pady=(0, 5))
         self.wra_4.pack(side="top", fill="x", padx=5, pady=(0, 5))
 
-        self.wll_look_help = ttkbootstrap.Label(self.master, text="使用方法请查看 Help ( 帮助 ) 页面")
-        self.wll_look_help.pack(side="bottom", fill="x", padx=5, pady=(0, 5))
+        self.wfe_help = ttkbootstrap.Frame(self.master)
+        self.wfe_help.pack(side="bottom", fill="x", padx=5, pady=(0, 5))
+
+        self.wll_look_help = ttkbootstrap.Label(self.wfe_help, text="使用方法请查看 Help ( 帮助 ) 页面")
+        self.wll_afdian = ttkbootstrap.Label(self.wfe_help, text="前往爱发电赞助作者", foreground="medium purple", cursor="hand2")
+        self.wll_look_help.pack(side="left", fill="x")
+        self.wll_afdian.pack(side="right", fill="x")
+
+        self.wll_afdian.bind("<Button-1>", lambda _: webbrowser.open(env.AFDIAN), True)
 
 
     def final_initial(self):

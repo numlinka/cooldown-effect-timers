@@ -17,7 +17,7 @@ class CoolDown (object):
     def __init__(self, master: ttkbootstrap.Frame):
         self.master = master
 
-        self.c_interval_now = core.configuration.window_effectside_interval
+        self.c_interval_now = core.configuration.window_cooldown_interval
         self.c_interval_min = 20
         self.c_interval_max = 200
 
@@ -60,7 +60,7 @@ class CoolDown (object):
         self.wll_interval_value.config(text=f"({value})")
         self.v_interval_indirect.set(value)
         window.cooldown.set_spacing(value)
-        core.configuration.window_effectside_interval.set(value)
+        core.configuration.window_cooldown_interval.set(value)
 
 
     def bin_interval_indirect(self, *_):

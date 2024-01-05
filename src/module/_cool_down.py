@@ -186,10 +186,10 @@ class CoolDown (object):
 
         将剩余冷却时间设置为最大值
 
-        serial: 指定角色序号 若为空则自动获取当前前台角色的序号
+        serial: 指定角色序号 若为空或为 0 则自动获取当前前台角色的序号
         second: 若提供该参数则设置最大冷却时间后置位
         """
-        if serial is Ellipsis: serial = module.roleserial.get()
+        if serial is Ellipsis or serial == 0: serial = module.roleserial.get()
         self.cd2u_skills[serial].set(second)
 
 
@@ -239,10 +239,10 @@ class CoolDown (object):
 
         将剩余冷却时间设置为最大值
 
-        serial: 指定角色序号 若为空则自动获取当前前台角色的序号
+        serial: 指定角色序号 若为空或为 0 则自动获取当前前台角色的序号
         second: 若提供该参数则设置最大冷却时间后置位
         """
-        if serial is Ellipsis: serial = module.roleserial.get()
+        if serial is Ellipsis or serial == 0: serial = module.roleserial.get()
         self.cd2u_burst[serial].set(second)
 
 

@@ -1,6 +1,9 @@
 # Licensed under the GPL 3.0 License.
 # cooldown-effect-timers by numlinka.
 
+# std
+import tkinter
+
 # site
 import ttkbootstrap
 
@@ -51,3 +54,14 @@ def set_window_icon(window: ttkbootstrap.Window, icon_path: str):
 
     except Exception as e:
         ...
+
+
+class combobox_do_not_want_selection (object):
+    def __init__(self, combobox: ttkbootstrap.Combobox):
+        self.combobox = combobox
+        self.combobox.bind("<<ComboboxSelected>>", self.selection_clear, True)
+        self.combobox.bind("<FocusIn>", self.selection_clear, True)
+        self.combobox.bind("<FocusOut>", self.selection_clear, True)
+
+    def selection_clear(self, *_):
+        self.combobox.selection_clear()

@@ -48,6 +48,7 @@ class Interface (object):
 
     def initial(self):
         self.cooldown.initial()
+        self.effect_side.initial()
         module.clock.add_event(self.clock.add_clock_count)
 
 

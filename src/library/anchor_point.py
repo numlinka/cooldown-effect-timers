@@ -44,12 +44,15 @@ class AnchorPoint (object):
         self.unit_offset = x, y
 
 
-    def coordinates(self, offset_unit: int = 0):
+    def coordinates(self, offset_base: int = 0, offset_unit: int = 0):
         orx, ory = self.origin_coordinates
         ox1, oy1 = self.base_offset
         ox2, oy2 = self.unit_offset
 
-        rux = orx + (ox1 + ox2) * offset_unit
-        ruy = ory + (oy1 + oy2) * offset_unit
+        rux = orx + ox1 * offset_base
+        ruy = ory + oy1 * offset_base
+
+        rux = rux + ox2 * offset_unit
+        ruy = ruy + oy2 * offset_unit
 
         return Coordinates(rux, ruy)

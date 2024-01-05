@@ -8,7 +8,22 @@ PROJECT = "cooldown-effect-timers"
 PROJECT_NAME = "冷却效果计时器"
 AUTHOR = "numLinka"
 
-version_code = 3001
-version_name = "0.3.1"
+AFDIAN = "https://afdian.net/a/numlinka"
+
+version_code = 4000
+version_name = "0.4.0"
 
 MAIN_TITLE = f"{PROJECT} v{version_name} -by {AUTHOR}"
+
+
+__all__ = [
+    "directory",
+    "filepath",
+    "PROJECT",
+    "PROJECT_NAME",
+    "AUTHOR",
+    "AFDIAN",
+    "version_code",
+    "version_name",
+    "MAIN_TITLE",
+]

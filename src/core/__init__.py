@@ -11,9 +11,6 @@ import window
 
 
 def save_configuration():
-
-    # configuration.window_effectside_site_x.set(window.window_effectside.winfo_x())
-    # configuration.window_effectside_site_y.set(window.window_effectside.winfo_y())
     configuration._save_json(env.filepath.sldata.configuration)
 
 

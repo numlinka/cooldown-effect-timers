@@ -17,10 +17,10 @@
     <img src="https://img.shields.io/badge/License-GPLv3-lightblue" alt="GPLv3"/>
   </a>
   <a style="text-decoration:none" href="https://github.com/numlinka/cooldown-effect-timers/releases">
-    <img src="https://img.shields.io/badge/releases-0.1-lightblue" alt="releases"/>
+    <img src="https://img.shields.io/badge/releases-0.3.1-lightblue" alt="releases"/>
   </a>
-  <a style="text-decoration:none" href="https://www.python.org/downloads/release/python-3110/">
-    <img src="https://img.shields.io/badge/Python-3.11-lightblue" alt="Python3.11"/>
+  <a style="text-decoration:none" href="https://www.python.org/downloads/release/python-3120/">
+    <img src="https://img.shields.io/badge/Python-3.12-lightblue" alt="Python3.11"/>
   </a>
 </div>
 
@@ -61,7 +61,7 @@
 
 演示视频：[bilibili](https://www.bilibili.com/video/BV1E64y1W7V2)
 
-赞助页面：[爱发电](https://afdian.net/a/numlinka) ( 未认证，比较懒 )
+赞助页面：[爱发电](https://afdian.net/a/numlinka)
 
 联系方式：numlinka@163.com
 

@@ -6,6 +6,26 @@
 from .base import BaseRoleEvent
 
 
+class Xiangling (BaseRoleEvent):
+    # 已测试
+    role_name = "香菱 [ 4 命 ]"
+
+    cd_skills = 12
+    cd_burst = 20
+
+    ces = "锅巴"
+    ceb = "旋火轮"
+
+    def press_skills(self):
+        self.co_cooldown.skills_set()
+        self.co_effectside.set_effect(self.ces, 7.2)
+
+    def press_burst(self):
+        self.co_cooldown.burst_set()
+        self.co_effectside.set_effect(self.ceb, 14.5)
+
+
+
 class Keqing (BaseRoleEvent):
     # 已测试
     role_name = "刻晴"
@@ -74,6 +94,7 @@ class HuTao (BaseRoleEvent):
 
 
 class Zhongli (BaseRoleEvent):
+    # 已测试
     role_name = "钟离"
 
     cd_skills = 12+1
@@ -104,23 +125,30 @@ class Zhongli (BaseRoleEvent):
 
 class Yelan (BaseRoleEvent):
     # 已测试
-    # todo 点按
     role_name = "夜兰"
 
     cd_skills = 10 + 4
     cd_burst = 18
 
+    det = "夜兰 - 萦络纵命索 - 判断"
     ces = "络命丝"
     ceb = "玄掷玲珑"
 
     def press_skills(self):
         if self.co_effectside.exist(self.ces):
-            self.co_cooldown.set_skills_cd(10)
+            self.co_cooldown.skills_set(0, 10)
             self.co_effectside.del_effect(self.ces)
 
         else:
             self.co_cooldown.skills_set()
+            self.co_effectside.set_effect(self.det, 0.2)
             self.co_effectside.set_effect(self.ces, 4)
+
+    def release_skills(self):
+        if self.co_effectside.exist(self.det):
+            self.co_cooldown.skills_set(0, 10)
+            self.co_effectside.del_effect(self.det)
+            self.co_effectside.del_effect(self.ces)
 
     def press_burst(self):
         self.co_cooldown.burst_set()
@@ -129,6 +157,7 @@ class Yelan (BaseRoleEvent):
 
 
 __all__ = [
+    "Xiangling",
     "Keqing",
     "Xingqiu",
     "HuTao",

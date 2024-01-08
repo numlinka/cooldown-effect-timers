@@ -10,7 +10,7 @@ class static (object): ...
 
 
 
-class Directory (object):
+class Directory (str):
     def __getattribute__(self, __name: str) -> Any:
         value = super().__getattribute__(__name)
 

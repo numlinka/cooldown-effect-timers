@@ -32,7 +32,7 @@ class motion_window_by_canvas (object):
         if callable(self.extra): self.extra(self, event)
 
 
-def center_window(window: ttkbootstrap.Window, window_width: int = ..., window_height: int = ..., set_window_size: bool = False):
+def center_window_for_screen(window: ttkbootstrap.Window, window_width: int = ..., window_height: int = ..., set_window_size: bool = False):
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
 
@@ -47,12 +47,28 @@ def center_window(window: ttkbootstrap.Window, window_width: int = ..., window_h
     window.geometry(result)
 
 
+def center_window_for_window(window: ttkbootstrap.Toplevel, target_window: ttkbootstrap.Window, window_width: int = ..., window_height: int = ..., set_window_size: bool = False):
+    target_window_x = target_window.winfo_x()
+    target_window_y = target_window.winfo_y()
+    target_window_width = target_window.winfo_width()
+    target_window_height = target_window.winfo_height()
+    target_window_center_x = target_window_x + target_window_width // 2
+    target_window_center_y = target_window_y + target_window_height // 2
+
+    window_width = window.winfo_width() if window_width is Ellipsis else window_width
+    window_height = window.winfo_height() if window_height is Ellipsis else window_height
+    window_x = target_window_center_x - window_width // 2
+    window_y = target_window_center_y - window_height // 2
+    result = f"{window_width}x{window_height}+{window_x}+{window_y}" if set_window_size else f"+{window_x}+{window_y}"
+    window.geometry(result)
+
+
 def set_window_icon(window: ttkbootstrap.Window, icon_path: str):
     try:
         window.iconbitmap(default=icon_path)
         window.iconbitmap(bitmap=icon_path)
 
-    except Exception as e:
+    except Exception as _:
         ...
 
 

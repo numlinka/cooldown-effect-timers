@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/badge/License-GPLv3-lightblue" alt="GPLv3"/>
   </a>
   <a style="text-decoration:none" href="https://github.com/numlinka/cooldown-effect-timers/releases">
-    <img src="https://img.shields.io/badge/releases-0.3.1-lightblue" alt="releases"/>
+    <img src="https://img.shields.io/badge/releases-0.5.0-lightblue" alt="releases"/>
   </a>
   <a style="text-decoration:none" href="https://www.python.org/downloads/release/python-3120/">
     <img src="https://img.shields.io/badge/Python-3.12-lightblue" alt="Python3.11"/>

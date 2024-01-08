@@ -45,9 +45,11 @@ def disable(*_):
 
 def initial():
     mainwindow.title(env.MAIN_TITLE)
-    method.center_window(mainwindow, 500, 300, 1)
+    method.center_window_for_screen(mainwindow, 550, 330, 1)
     mainwindow.minsize(500, 300)
     method.set_window_icon(mainwindow, env.filepath.iconbitmap)
+    # mainwindow.style.theme_use("darkly")
+    mainwindow.style.theme_use("minty")
 
     window_cooldown.title("cooldown")
     window_cooldown.overrideredirect(True)

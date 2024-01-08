@@ -20,11 +20,11 @@ base = _base()
 
 
 class _directory (Directory):
-    class __resources (str, Directory):
-        ...
+    class __sldata (Directory):
+        team_formation = __(base.sldata, "team-formation")
 
 
-    sldata = __resources(".sldata")
+    sldata = __sldata(".sldata")
 
 
 directory = _directory()

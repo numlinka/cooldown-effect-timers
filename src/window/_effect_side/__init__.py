@@ -20,9 +20,9 @@ class EffectSideWindow (object):
     def __init__(self, master: ttkbootstrap.Toplevel):
         self.master = master
         self.toggle = "odd"
-        self.mode = str(core.configuration.window_effectside_mode)
-        self.amount = 8
-        self.baseline = False
+        self.mode = core.configuration.window_effectside_mode
+        self.amount = core.configuration.window_effectside_amount
+        self.baseline = core.configuration.window_effectside_baseline
         self.anchorpoint: AnchorPoint
         self.initial()
 
@@ -36,7 +36,7 @@ class EffectSideWindow (object):
         self.canvas = ttkbootstrap.Canvas(self.master, background=TRANSPARENTCOLOR)
         self.canvas.pack(fill="both", expand=True)
 
-        self.set_amount()
+        self.set_amount(self.amount)
         window.method.motion_window_by_canvas(self.master, self.canvas, "motion", self.update_configuration)
 
 
@@ -160,7 +160,7 @@ class EffectSideWindow (object):
 
 
     def set_mode(self, mode: str = ..., amount: int = ...):
-        mode = mode if mode in esm.ALLMODS else self.mode
+        mode = mode if mode in esm.ALLMODES else self.mode
         self.mode = mode
 
         if isinstance(amount, int): self.set_amount(amount, False)

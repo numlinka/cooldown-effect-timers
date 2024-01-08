@@ -7,7 +7,7 @@ HORIZONTAL = "horizontal" # 水平排列
 SERIAL_VERTICAL = "serial-vertical" # 顺序垂直排列
 SERUAL_HORIZONTAL = "serial-horizontal" # 顺序水平排列
 
-ALLMODS = [
+ALLMODES = [
     VERTICAL,
     HORIZONTAL,
     SERIAL_VERTICAL,
@@ -19,5 +19,5 @@ __all__ = [
     "HORIZONTAL",
     "SERIAL_VERTICAL",
     "SERUAL_HORIZONTAL",
-    "ALLMODS"
+    "ALLMODES"
 ]

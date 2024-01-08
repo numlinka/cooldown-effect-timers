@@ -32,8 +32,8 @@ class Interface (object):
         self.frame_about = ttkbootstrap.Frame(self.notebook)
 
         self.notebook.add(self.frame_roles, text="角色")
-        self.notebook.add(self.frame_cooldown, text="冷却计时器")
-        self.notebook.add(self.frame_effect_side, text="效果计时器")
+        self.notebook.add(self.frame_cooldown, text="技能冷却")
+        self.notebook.add(self.frame_effect_side, text="技能效果")
         self.notebook.add(self.frame_clock, text="时钟")
         self.notebook.add(self.frame_help, text="帮助")
         self.notebook.add(self.frame_about, text="关于")

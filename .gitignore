@@ -1,4 +1,5 @@
 .venv/
+.devenv/
 .vscode/
 .sldata/
 

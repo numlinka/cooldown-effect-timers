@@ -10,8 +10,8 @@ AUTHOR = "numLinka"
 
 AFDIAN = "https://afdian.net/a/numlinka"
 
-version_code = 4000
-version_name = "0.4.0"
+version_code = 5000
+version_name = "0.5.0"
 
 MAIN_TITLE = f"{PROJECT} v{version_name} -by {AUTHOR}"
 

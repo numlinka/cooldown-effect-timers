@@ -39,14 +39,14 @@ class CoolDown (object):
         self.wll_moving_block.pack(side="left")
         self.wcb_moving_block.pack(side="right")
 
-        self.wll_interval = ttkbootstrap.Label(self.wfe_interval, text="间距")
-        self.wsx_interval = ttkbootstrap.Spinbox(self.wfe_interval, from_=self.c_interval_min, to=self.c_interval_max, textvariable=self.v_interval_indirect, increment=1, command=self.bin_interval_indirect, width=5)
-        self.wll_interval_value = ttkbootstrap.Label(self.wfe_interval, text=f"{self.c_interval_now}", width=10)
+        self.wll_interval = ttkbootstrap.Label(self.wfe_interval, text="角色间距")
+        self.wll_interval_value = ttkbootstrap.Label(self.wfe_interval, text=f"( {self.c_interval_now} )", width=10)
         self.wse_interval = tkinter.Scale(self.wfe_interval, from_=self.c_interval_min, to=self.c_interval_max, variable=self.v_interval, orient=HORIZONTAL, resolution=1, command=self.bin_interval)
+        self.wsb_interval = ttkbootstrap.Spinbox(self.wfe_interval, from_=self.c_interval_min, to=self.c_interval_max, textvariable=self.v_interval_indirect, increment=1, width=5)
         self.wll_interval.pack(side="left")
         self.wll_interval_value.pack(side="left")
         self.wse_interval.pack(side="left", fill="x", expand=True, padx=(50, 5))
-        self.wsx_interval.pack(side="left")
+        self.wsb_interval.pack(side="left")
 
         self.v_interval_indirect.trace_add("write", self.bin_interval_indirect)
 
@@ -57,7 +57,7 @@ class CoolDown (object):
 
     def bin_interval(self, *_):
         value = self.v_interval.get()
-        self.wll_interval_value.config(text=f"({value})")
+        self.wll_interval_value.config(text=f"( {value} )")
         self.v_interval_indirect.set(value)
         window.cooldown.set_spacing(value)
         core.configuration.window_cooldown_interval.set(value)

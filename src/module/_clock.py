@@ -18,6 +18,11 @@ class Clock (object):
         self.task_main = threading.Thread(None, self.mainloop, "Clock", (), daemon=True)
         self.task_optupt = threading.Thread(None, self.__external_loop, "Clock-optupt", (), daemon=True)
 
+        self._last_tick_time = 0
+        self._tick_count = 0
+        self._tick_consume = 0
+        self._tick_delay = 0
+
 
     def set_interval(self, value: float = 0.1) -> None:
         if not isinstance(value, float):
@@ -35,10 +40,30 @@ class Clock (object):
             self.event_lst.append(event)
 
 
+    def get_tick_count(self) -> int:
+        with self._lock:
+            return self._tick_count
+
+
+    def get_tick_consume(self) -> int:
+        with self._lock:
+            return self._tick_consume
+        
+
+    def get_tick_delay(self) -> int:
+        with self._lock:
+            return self._tick_delay
+
+
     def __external_loop(self):
         while True:
             self.internal_semaphore.acquire()
             with self._lock:
+                self._tick_count += 1
+                start_time = int(time.monotonic() * 1000)
+                self._tick_delay = start_time - self._last_tick_time
+                self._last_tick_time = start_time
+
                 for event in self.event_lst:
                     try:
                         if isinstance(event, threading.Event):
@@ -56,6 +81,9 @@ class Clock (object):
                     except Exception:
                         ...
 
+                end_time = int(time.monotonic() * 1000)
+                self._tick_consume = end_time - start_time
+
 
     def mainloop(self):
         start_timestamp = time.monotonic()
@@ -68,7 +96,7 @@ class Clock (object):
             end_timestamp = start_timestamp + self.interval * tick
             difference = end_timestamp - now_timestamp
 
-            if difference <= 0.0001:
+            if difference <= 0.001:
                 continue
 
             time.sleep(difference)

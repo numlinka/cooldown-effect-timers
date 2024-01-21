@@ -30,30 +30,33 @@ class Incident (object):
 
 
     def handle(self, key, release: bool = False):
-        if isinstance(key, pynput.keyboard.KeyCode):
-            key = str(key)[1:-1]
+        try:
+            if isinstance(key, pynput.keyboard.KeyCode):
+                key = str(key)[1:-1]
 
+            if not release:
+                if key in ["1", "2", "3", "4"]:
+                    # module.roleserial.set(int(key))
+                    module.handle.action_switch_roles(int(key))
 
-        if not release:
-            if key in ["1", "2", "3", "4"]:
-                # module.roleserial.set(int(key))
-                module.handle.action_switch_roles(int(key))
+                elif key == "e":
+                    module.handle.action_press_skills()
 
-            elif key == "e":
-                module.handle.action_press_skills()
+                elif key == "q":
+                    module.handle.action_press_burst()
 
-            elif key == "q":
-                module.handle.action_press_burst()
+                elif key == "110":
+                    module.handle.action_reset()
 
-            elif key == "110":
-                module.handle.action_reset()
+            else:
+                if key == "e":
+                    module.handle.action_release_skills()
 
-        else:
-            if key == "e":
-                module.handle.action_release_skills()
+                elif key == "q":
+                    module.handle.action_release_burst()
 
-            elif key == "q":
-                module.handle.action_release_burst()
+        except Exception as _:
+            ...
 
 
     def start(self):

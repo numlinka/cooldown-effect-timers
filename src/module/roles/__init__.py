@@ -9,6 +9,7 @@ from . import roles_from_liyue
 from . import roles_from_inazuma
 from . import roles_from_sumeru
 from . import roles_from_fontaine
+from . import expand_rules_lua
 
 
 roles_table: dict[str: BaseRoleEvent] = {}
@@ -34,6 +35,13 @@ def initial():
             name = roleclass.role_name
             if name == BaseRoleEvent.role_name: continue
             roles_table[name] = roleclass
+
+    try:
+        roles_table.update(expand_rules_lua.get_rule_lst())
+
+    except Exception:
+        ...
+
 
 
 __all__ = [

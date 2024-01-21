@@ -48,7 +48,7 @@ configuration._new("role_3", str, "")
 configuration._new("role_4", str, "")
 
 try:
-    configuration._load_json(env.filepath.sldata.configuration)
+    configuration._load_json(env.cwd.sldata.configuration)
 
 except Exception as _:
     ...

@@ -188,6 +188,7 @@ class EffectSide (object):
 
         name: 效果名称
         value: 效果持续时间 (秒)
+        serial: 指定角色序号 若为空则自动获取当前前台角色的序号
         """
         if not isinstance(name, str):
             raise TypeError
@@ -219,6 +220,7 @@ class EffectSide (object):
         value: 效果持续时间 (秒) 若效果名称已存在且未设置该值时则沿用之前的设置
         much: 要重置的数量 默认重置所有效果
         reverse: 反向查找 从列表末尾开始查找
+        serial: 指定角色序号 若为空则自动获取当前前台角色的序号
         """
         if not isinstance(name, str):
             raise TypeError

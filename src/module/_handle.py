@@ -35,7 +35,12 @@ class Handle (object):
             if role not in roles.roles_table:
                 raise ValueError(f"角色 {role} 不存在")
 
-            role_class = roles.roles_table[role]
+            if role.startswith("*"):
+                role_class = roles.expand_rules_lua.LuaRoleEvent
+                args = (roles.roles_table[role],)
+
+            else:
+                role_class = roles.roles_table[role]
 
         else:
             role_class = role

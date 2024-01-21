@@ -84,7 +84,7 @@ class HuTao (BaseRoleEvent):
     def switch_out(self):
         self.co_effectside.del_effect(self.ces)
 
-    def release_skills(self):
+    def press_skills(self):
         self.co_cooldown.skills_set()
         self.co_effectside.set_effect(self.ces, 9)
 

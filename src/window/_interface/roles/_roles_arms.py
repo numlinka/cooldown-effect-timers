@@ -24,8 +24,8 @@ class RolesArms (object):
         self.wll = ttkbootstrap.Label(self.wfe, text=f"roles - {serial}")
         self.wfe_role = ttkbootstrap.Frame(self.wfe)
         self.wfe_arms = ttkbootstrap.Frame(self.wfe)
-        self.wcb_role = ttkbootstrap.Combobox(self.wfe_role, width=1)
-        self.wcb_arms = ttkbootstrap.Combobox(self.wfe_arms, width=1)
+        self.wcb_role = ttkbootstrap.Combobox(self.wfe_role, state=READONLY, width=1)
+        self.wcb_arms = ttkbootstrap.Combobox(self.wfe_arms, state=READONLY, width=1)
         self.wbn_role = ttkbootstrap.Button(self.wfe_role, bootstyle="outline", text="+")
         self.wbn_arms = ttkbootstrap.Button(self.wfe_arms, bootstyle="outline", text="+")
 
@@ -68,9 +68,8 @@ class RolesArms (object):
             self.v_role = name
 
         except Exception as _:
-            dialogs.Messagebox.show_error(title="角色事件错误", message=f"角色 [{self.serial}] {name}\n加载失败")
-            self.wcb_role.set("")
-            self.v_role = ""
+            dialogs.Messagebox.show_error(title="角色事件错误", message=f"角色 [{self.serial}] \"{name}\"\n加载失败")
+            self.wcb_role.set(self.v_role)
 
 
     def set_arms(self, *_, name: str =...):

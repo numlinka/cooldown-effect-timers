@@ -3,45 +3,31 @@
 
 # std
 import os
-from os.path import join as __
 
 # local
 from library.structure import *
 
 
-cwd = os.getcwd()
+current_working_directory = os.getcwd()
 
 
-class _base (Directory):
-    sldata = ".sldata"
+class __cwd (DirectoryPlus):
+    class sldata (DirectoryPlus):
+        _self_value_ = ".sldata"
+        formation = "formation"
+        class customize (DirectoryPlus):
+            lua = "lua"
 
-base = _base()
+        configuration = FilePath("configuration")
 
-
-
-class _directory (Directory):
-    class __sldata (Directory):
-        team_formation = __(base.sldata, "team-formation")
-
-
-    sldata = __sldata(".sldata")
-
-
-directory = _directory()
+    iconbitmap = FilePath("favicon.ico")
 
 
 
-class _filepath (static):
-    class sldata (static):
-        configuration = __(directory.sldata, "configuration")
+cwd = __cwd(current_working_directory)
+cwd._pass_self_ = True
 
-    iconbitmap = "favicon.ico"
-
-
-filepath  = _filepath()
+abscwd = __cwd(current_working_directory)
 
 
-__all__ = [
-    "directory",
-    "filepath"
-]
+__all__ = ["cwd", "abscwd"]

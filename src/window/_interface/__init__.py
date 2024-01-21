@@ -14,6 +14,7 @@ from .effect_side import EffectSide
 from .clock import Clock
 from .help import Help
 from .about import About
+from .customize import Customize
 
 
 class Interface (object):
@@ -30,6 +31,7 @@ class Interface (object):
         self.frame_clock = ttkbootstrap.Frame(self.notebook)
         self.frame_help = ttkbootstrap.Frame(self.notebook)
         self.frame_about = ttkbootstrap.Frame(self.notebook)
+        self.frame_customize = ttkbootstrap.Frame(self.notebook)
 
         self.notebook.add(self.frame_roles, text="角色")
         self.notebook.add(self.frame_cooldown, text="技能冷却")
@@ -37,6 +39,7 @@ class Interface (object):
         self.notebook.add(self.frame_clock, text="时钟")
         self.notebook.add(self.frame_help, text="帮助")
         self.notebook.add(self.frame_about, text="关于")
+        self.notebook.add(self.frame_customize, text="自定义角色")
 
         self.roles = Roles(self.frame_roles)
         self.cooldown = CoolDown(self.frame_cooldown)
@@ -44,6 +47,7 @@ class Interface (object):
         self.clock = Clock(self.frame_clock)
         self.help = Help(self.frame_help)
         self.about = About(self.frame_about)
+        self.customize = Customize(self.frame_customize)
 
 
     def initial(self):

@@ -35,7 +35,7 @@ interface = Interface(mainwindow)
 
 
 def disable(*_):
-    end_date = "2024-02-01"
+    end_date = "2024-03-01"
     end_stamp = int(time.mktime(time.strptime(end_date, "%Y-%m-%d")))
     now_stamp = int(time.time())
     if end_stamp > now_stamp: return
@@ -47,7 +47,7 @@ def initial():
     mainwindow.title(env.MAIN_TITLE)
     method.center_window_for_screen(mainwindow, 550, 330, 1)
     mainwindow.minsize(500, 300)
-    method.set_window_icon(mainwindow, env.filepath.iconbitmap)
+    method.set_window_icon(mainwindow, env.cwd.iconbitmap)
     # mainwindow.style.theme_use("darkly")
     mainwindow.style.theme_use("minty")
 

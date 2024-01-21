@@ -59,7 +59,7 @@ class EffectSide (object):
         self.wcb_baseline.pack(side=RIGHT)
 
         self.wll_mode = ttkbootstrap.Label(self.wfe_mode, text="显示模式")
-        self.wcb_mode = ttkbootstrap.Combobox(self.wfe_mode, textvariable=self.v_mode, values=ALLMODES, width=32)
+        self.wcb_mode = ttkbootstrap.Combobox(self.wfe_mode, state=READONLY, textvariable=self.v_mode, values=ALLMODES, width=32)
         self.wll_mode.pack(side=LEFT)
         self.wcb_mode.pack(side=RIGHT)
 

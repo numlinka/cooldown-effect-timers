@@ -13,7 +13,7 @@ class About (object):
     def __init__(self, master: ttkbootstrap.Frame):
         self.master = master
         self.wtt_about = ttkbootstrap.Text(self.master)
-        self.wtt_about.insert(INSERT, constants.ABOUT_TEXT)
+        self.wtt_about.insert(INSERT, constants.TEXT_ABOUT)
         self.wtt_about.configure(state=DISABLED)
         self.wtt_about.pack(fill=BOTH, expand=True)
 

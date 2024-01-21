@@ -4,7 +4,7 @@
 
 TRANSPARENTCOLOR = "grey"
 
-ABOUT_TEXT = """cooldown-effect-timers - About / 关于
+TEXT_ABOUT = """cooldown-effect-timers - About / 关于
 
 cooldown-effect-timers 是一个免费 ( free ) 开源 ( open source ) 软件
 对于软件的修改和再分发请遵守 GNU General Public License v3.0 协议
@@ -42,7 +42,7 @@ cooldown-effect-timers ( 原神技能冷却时间和效果持续时间计时器 
 
 """
 
-HELP_TEXT = """cooldown-effect-timers - HELP / 帮助
+TEXT_HELP = """cooldown-effect-timers - HELP / 帮助
 
 cooldown-effect-timers 是一个免费 ( free ) 开源 ( open source ) 软件
 对于软件的修改和再分发请遵守 GNU General Public License v3.0 协议
@@ -207,5 +207,5 @@ GitHub
 
 __all__ = [
     "TRANSPARENTCOLOR",
-    "ABOUT_TEXT"
+    "TEXT_ABOUT"
 ]

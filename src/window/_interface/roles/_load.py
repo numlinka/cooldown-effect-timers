@@ -59,8 +59,8 @@ class LoadFormation (object):
 
 
     def load_list(self, *_):
-        for name in os.listdir(env.directory.sldata.team_formation):
-            path = os.path.join(env.directory.sldata.team_formation, name)
+        for name in os.listdir(env.cwd.sldata.formation):
+            path = os.path.join(env.cwd.sldata.formation, name)
             if not os.path.isfile(path) or not name.endswith(self.suffix):
                continue
 
@@ -76,7 +76,7 @@ class LoadFormation (object):
         alias = self.wtv_lst.focus()
         if alias == "": return
 
-        path = os.path.join(env.directory.sldata.team_formation, alias + self.suffix)
+        path = os.path.join(env.cwd.sldata.formation, alias + self.suffix)
         if not os.path.isfile(path): return
 
         try:
@@ -120,7 +120,7 @@ class LoadFormation (object):
         alias = self.wtv_lst.focus()
         if alias == "": return
 
-        path = os.path.join(env.directory.sldata.team_formation, alias + self.suffix)
+        path = os.path.join(env.cwd.sldata.formation, alias + self.suffix)
         if not os.path.isfile(path): return
 
         self.wtv_lst.delete(alias)

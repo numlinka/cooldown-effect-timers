@@ -13,7 +13,7 @@ class Help (object):
     def __init__(self, master: ttkbootstrap.Frame):
         self.master = master
         self.wtt_help = ttkbootstrap.Text(self.master)
-        self.wtt_help.insert(INSERT, constants.HELP_TEXT)
+        self.wtt_help.insert(INSERT, constants.TEXT_HELP)
         self.wtt_help.configure(state=DISABLED)
         self.wtt_help.pack(fill=BOTH, expand=True)
 

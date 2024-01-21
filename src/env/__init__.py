@@ -2,7 +2,7 @@
 # cooldown-effect-timers by numlinka.
 
 # self
-from .directory_and_file import directory, filepath
+from .directory_and_file import cwd, abscwd
 
 PROJECT = "cooldown-effect-timers"
 PROJECT_NAME = "冷却效果计时器"
@@ -10,15 +10,15 @@ AUTHOR = "numLinka"
 
 AFDIAN = "https://afdian.net/a/numlinka"
 
-version_code = 5000
-version_name = "0.5.0"
+version_code = 6000
+version_name = "0.6.0"
 
 MAIN_TITLE = f"{PROJECT} v{version_name} -by {AUTHOR}"
 
 
 __all__ = [
-    "directory",
-    "filepath",
+    "cwd",
+    "abscwd",
     "PROJECT",
     "PROJECT_NAME",
     "AUTHOR",

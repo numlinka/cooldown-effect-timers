@@ -17,14 +17,14 @@ class Furina (BaseRoleEvent):
     # 已测试
     role_name = "芙宁娜"
 
-    cd_skills = 20
+    cd_skill = 20
     cd_burst = 15
 
     ces = "孤心沙龙"
     ceb = "万众狂欢"
 
-    def press_skills(self):
-        self.co_cooldown.skills_set()
+    def press_skill(self):
+        self.co_cooldown.skill_set()
         self.co_effectside.set_effect(self.ces, 30)
 
     def press_burst(self):

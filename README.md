@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/badge/License-GPLv3-lightblue" alt="GPLv3"/>
   </a>
   <a style="text-decoration:none" href="https://github.com/numlinka/cooldown-effect-timers/releases">
-    <img src="https://img.shields.io/badge/releases-0.6.0-lightblue" alt="releases"/>
+    <img src="https://img.shields.io/badge/releases-0.7.0-lightblue" alt="releases"/>
   </a>
   <a style="text-decoration:none" href="https://www.python.org/downloads/release/python-3120/">
     <img src="https://img.shields.io/badge/Python-3.11-lightblue" alt="Python3.11"/>
@@ -47,7 +47,7 @@
 技能冷却计时器 不读取、修改游戏内存，<br/>
 仅通过监听键盘事件帮助你计算技能冷却时间和技能效果持续时间。
 
-你需要使用窗口化运行游戏或在全屏游戏中点击一次公告 ( 玄学操作 ) 才能看到悬浮窗。
+你需要使用窗口化运行游戏才能看到悬浮窗。
 
 
 ### 运行环境要求

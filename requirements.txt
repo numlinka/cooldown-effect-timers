@@ -1,0 +1,4 @@
+ttkbootstrap
+pynput
+inputs
+lupa

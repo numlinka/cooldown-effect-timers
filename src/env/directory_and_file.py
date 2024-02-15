@@ -12,9 +12,10 @@ current_working_directory = os.getcwd()
 
 
 class __cwd (DirectoryPlus):
-    class sldata (DirectoryPlus):
-        _self_value_ = ".sldata"
+    class assets (DirectoryPlus):
+        _self_value_ = "assets"
         formation = "formation"
+
         class customize (DirectoryPlus):
             lua = "lua"
 

@@ -28,7 +28,7 @@ class LoadFormation (object):
         self.window.focus_set()
         window.method.center_window_for_window(self.window, window.mainwindow, 400, 250, True)
 
-        self.suffix = ".team-tamplate.json"
+        self.suffix = ".formation.json"
         self.default_text = "左键单击查看\n左键双击加载\n\n右键双击删除"
 
         self.wfe_lst = ttkbootstrap.Frame(self.window)
@@ -59,8 +59,8 @@ class LoadFormation (object):
 
 
     def load_list(self, *_):
-        for name in os.listdir(env.cwd.sldata.formation):
-            path = os.path.join(env.cwd.sldata.formation, name)
+        for name in os.listdir(env.cwd.assets.formation):
+            path = os.path.join(env.cwd.assets.formation, name)
             if not os.path.isfile(path) or not name.endswith(self.suffix):
                continue
 
@@ -76,7 +76,7 @@ class LoadFormation (object):
         alias = self.wtv_lst.focus()
         if alias == "": return
 
-        path = os.path.join(env.cwd.sldata.formation, alias + self.suffix)
+        path = os.path.join(env.cwd.assets.formation, alias + self.suffix)
         if not os.path.isfile(path): return
 
         try:
@@ -120,7 +120,7 @@ class LoadFormation (object):
         alias = self.wtv_lst.focus()
         if alias == "": return
 
-        path = os.path.join(env.cwd.sldata.formation, alias + self.suffix)
+        path = os.path.join(env.cwd.assets.formation, alias + self.suffix)
         if not os.path.isfile(path): return
 
         self.wtv_lst.delete(alias)

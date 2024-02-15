@@ -29,13 +29,13 @@ window_cooldown = ttkbootstrap.Toplevel()
 window_effectside = ttkbootstrap.Toplevel()
 
 
-cooldown = CoolDownWindow(window_cooldown)
-effectside = EffectSideWindow(window_effectside)
-interface = Interface(mainwindow)
+cooldown: CoolDownWindow
+effectside: EffectSideWindow
+interface: Interface
 
 
 def disable(*_):
-    end_date = "2024-03-01"
+    end_date = "2024-04-01"
     end_stamp = int(time.mktime(time.strptime(end_date, "%Y-%m-%d")))
     now_stamp = int(time.time())
     if end_stamp > now_stamp: return
@@ -68,6 +68,12 @@ def initial():
     window_effectside.attributes("-topmost", True)
     site = f"+{core.configuration.window_effectside_site_x}+{core.configuration.window_effectside_site_y}"
     window_effectside.geometry(site)
+
+    global cooldown, effectside, interface
+
+    cooldown = CoolDownWindow(window_cooldown)
+    effectside = EffectSideWindow(window_effectside)
+    interface = Interface(mainwindow)
 
     interface.initial()
     mainwindow.after(100, final_initial)

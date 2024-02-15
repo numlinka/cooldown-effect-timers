@@ -29,15 +29,19 @@ class LuaRoleEvent (BaseRoleEvent):
         self.lua.co_cooldown = co_cooldown
         self.lua.co_effectside = co_effectside
 
-        for attrname in ["cd_skills", "cd_burst"]:
+        for attrname in ["cd_skill", "cd_burst"]:
             value = getattr(self.lua, attrname)
             if isinstance(value, (int, float)):
                 setattr(self, attrname, value)
 
         for attrname in [
-            "switch_in", "switch_out",
-            "press_skills", "release_skills",
-            "press_burst", "release_burst"
+            "switch_in",    "switch_out",
+            "press_attack", "release_attack",
+            "press_skill",  "release_skill",
+            "press_burst",  "release_burst",
+            "press_sprint", "release_sprint",
+            "press_aiming", "release_aiming",
+            "press_jump",   "release_jump",
             ]:
             value = getattr(self.lua, attrname)
             if callable(value):
@@ -47,8 +51,8 @@ class LuaRoleEvent (BaseRoleEvent):
 
 def get_rule_lst():
     tuple = {}
-    for name in os.listdir(env.cwd.sldata.customize.lua):
-        path = os.path.join(env.cwd.sldata.customize.lua, name)
+    for name in os.listdir(env.cwd.assets.customize.lua):
+        path = os.path.join(env.cwd.assets.customize.lua, name)
         if not os.path.isfile(path) or not name.endswith(".lua"):
             continue
 

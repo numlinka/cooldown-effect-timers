@@ -1,8 +1,17 @@
-.venv/
+# 开发环境
 .devenv/
-.vscode/
-.sldata/
 
+# 生成环境
+.venv/
+.venv-joystick/
+
+# IDE
+.vscode/
+
+# 项目
+assets/
+
+# 打包
 build/
 dist/
 *.spec

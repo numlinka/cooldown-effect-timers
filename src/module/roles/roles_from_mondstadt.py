@@ -10,24 +10,24 @@ class Bennett (BaseRoleEvent):
     # 已测试
     role_name = "班尼特"
 
-    cd_skills = 10.2
+    cd_skill = 10.2
     cd_burst = 15
 
     det = "班尼特 - 热情过载 - 判断"
     ceb = "鼓舞领域"
 
-    def press_skills(self):
-        self.co_cooldown.skills_set(0, 10.2)
+    def press_skill(self):
+        self.co_cooldown.skill_set(0, 10.2)
         self.co_effectside.set_effect(self.det, 1.7)
 
-    def release_skills(self):
+    def release_skill(self):
         second = self.co_effectside.get_effect_second(self.det)
 
         if second > 1:
-            self.co_cooldown.skills_set(0, 4.2)
+            self.co_cooldown.skill_set(0, 4.2)
 
         elif second > 0:
-            self.co_cooldown.skills_set(0, 7.5 - second)
+            self.co_cooldown.skill_set(0, 7.5 - second)
 
         self.co_effectside.del_effect(self.det)
 

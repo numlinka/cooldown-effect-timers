@@ -60,7 +60,7 @@ class SaveFormation (object):
                 self.overwrite = formation_name
                 return
 
-        target_path = os.path.join(window.env.cwd.sldata.formation, f"{formation_name}.team-tamplate.json")
+        target_path = os.path.join(window.env.cwd.assets.formation, f"{formation_name}.formation.json")
 
         if os.path.isfile(target_path) and self.overwrite != formation_name:
             self.wll_warn.config(text="再次点击保存覆盖已有配置")

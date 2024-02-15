@@ -77,3 +77,7 @@ class Clock (object):
     def bin_clock_oversee(self, *_):
         value = self.v_oversee.get()
         core.configuration.window_clock_oversee.set(value)
+
+
+    def initial(self):
+        module.clock.add_event(self.add_clock_count)

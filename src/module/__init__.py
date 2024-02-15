@@ -7,16 +7,19 @@ from ._clock import Clock
 from ._role_serial import RoleSerial
 from ._cool_down import CoolDown
 from ._effect_side import EffectSide
-from ._incident import Incident
 from ._handle import Handle
+from ._listen_keyboard import ListenKeyboard
+from ._listen_mouse import ListenMouse
+from ._listen_joystick import ListenJoystick
 
 clock = Clock()
 roleserial = RoleSerial()
 cooldown = CoolDown()
 effectside = EffectSide()
-incident = Incident()
 handle = Handle()
-
+listen_keyboard = ListenKeyboard()
+listen_mouse = ListenMouse()
+listen_joystick = ListenJoystick()
 
 def initial():
     roles.initial()
@@ -30,4 +33,6 @@ def start():
     clock.start()
     # cooldown.start()
     # effectside.start()
-    incident.start()
+    listen_keyboard.start()
+    listen_mouse.start()
+    listen_joystick.start()

@@ -16,6 +16,7 @@ class Handle (object):
     def __init__(self):
         self.now_role = 1
         self.rolesobs = {index: roles.BaseRoleEvent() for index in range(1, 5)}
+        self.callback = lambda *_: ...
 
 
     def set_role(self, serial: int, role: str | roles.BaseRoleEvent, *args) -> None:
@@ -56,10 +57,14 @@ class Handle (object):
         getattr(core.configuration, f"role_{serial}").set(save_name)
 
         # 后处理
-        module.cooldown.set_skills_max_cd(unit.cd_skills, serial)
+        module.cooldown.set_skill_max_cd(unit.cd_skill, serial)
         module.cooldown.set_burst_max_cd(unit.cd_burst, serial)
 
         unit.serial = serial
+
+
+    def set_callback(self, callback: object):
+        self.callback = callback
 
 
     def action_switch_roles(self, serial: int = 1):
@@ -75,22 +80,91 @@ class Handle (object):
         self.rolesobs[new_value].switch_in()
 
 
-    def action_press_skills(self):
-        self.rolesobs[self.now_role].press_skills()
+    def action_press_attack(self):   self.rolesobs[self.now_role].press_attack()
+    def action_press_skill(self):    self.rolesobs[self.now_role].press_skill()
+    def action_press_burst(self):    self.rolesobs[self.now_role].press_burst()
+    def action_press_sprint(self):   self.rolesobs[self.now_role].press_sprint()
+    def action_press_aiming(self):   self.rolesobs[self.now_role].press_aiming()
+    def action_press_jump(self):     self.rolesobs[self.now_role].press_jump()
 
-
-    def action_release_skills(self):
-        self.rolesobs[self.now_role].release_skills()
-
-
-    def action_press_burst(self):
-        self.rolesobs[self.now_role].press_burst()
-
-
-    def action_release_burst(self):
-        self.rolesobs[self.now_role].release_burst()
-
+    def action_release_attack(self): self.rolesobs[self.now_role].release_attack()
+    def action_release_skill(self):  self.rolesobs[self.now_role].release_skill()
+    def action_release_burst(self):  self.rolesobs[self.now_role].release_burst()
+    def action_release_sprint(self): self.rolesobs[self.now_role].release_sprint()
+    def action_release_aiming(self): self.rolesobs[self.now_role].release_aiming()
+    def action_release_jump(self):   self.rolesobs[self.now_role].release_jump()
 
     def action_reset(self):
         module.cooldown.reset()
         module.effectside.clear_all_effect()
+
+
+    def key_action(self, key: str, is_release: bool = False):
+        if is_release:
+            self.key_action_release(key)
+        else:
+            self.key_action_press(key)
+
+
+    def key_action_press(self, key: str):
+        match key:
+            case core.configuration.action_key_role_1:  self.action_switch_roles(1)
+            case core.configuration.action_key_role_2:  self.action_switch_roles(2)
+            case core.configuration.action_key_role_3:  self.action_switch_roles(3)
+            case core.configuration.action_key_role_4:  self.action_switch_roles(4)
+
+            case core.configuration.action_key_attack:  self.action_press_attack()
+            case core.configuration.action_key_skill:   self.action_press_skill()
+            case core.configuration.action_key_burst:   self.action_press_burst()
+            case core.configuration.action_key_sprint:  self.action_press_sprint()
+            case core.configuration.action_key_aiming:  self.action_press_aiming()
+            case core.configuration.action_key_jump:    self.action_press_jump()
+
+            case core.configuration.action_key_reset:   self.action_reset()
+
+        self.key_sec_action_press(key)
+        self.callback(key, True)
+
+
+    def key_action_release(self, key: str):
+        match key:
+            case core.configuration.action_key_attack:  self.action_release_attack()
+            case core.configuration.action_key_skill:   self.action_release_skill()
+            case core.configuration.action_key_burst:   self.action_release_burst()
+            case core.configuration.action_key_sprint:  self.action_release_sprint()
+            case core.configuration.action_key_aiming:  self.action_release_aiming()
+            case core.configuration.action_key_jump:    self.action_release_jump()
+
+        self.key_sec_action_release(key)
+        self.callback(key, False)
+
+
+    def key_sec_action_press(self, key: str):
+        match key:
+            case core.configuration.action_key_role_1_sec:  self.action_switch_roles(1)
+            case core.configuration.action_key_role_2_sec:  self.action_switch_roles(2)
+            case core.configuration.action_key_role_3_sec:  self.action_switch_roles(3)
+            case core.configuration.action_key_role_4_sec:  self.action_switch_roles(4)
+
+            case core.configuration.action_key_attack_sec:  self.action_press_attack()
+            case core.configuration.action_key_skill_sec:   self.action_press_skill()
+            case core.configuration.action_key_burst_sec:   self.action_press_burst()
+            case core.configuration.action_key_sprint_sec:  self.action_press_sprint()
+            case core.configuration.action_key_aiming_sec:  self.action_press_aiming()
+            case core.configuration.action_key_jump_sec:    self.action_press_jump()
+
+            case core.configuration.action_key_reset_sec:   self.action_reset()
+
+
+    def key_sec_action_release(self, key: str):
+        match key:
+            case core.configuration.action_key_attack_sec:  self.action_release_attack()
+            case core.configuration.action_key_skill_sec:   self.action_release_skill()
+            case core.configuration.action_key_burst_sec:   self.action_release_burst()
+            case core.configuration.action_key_sprint_sec:  self.action_release_sprint()
+            case core.configuration.action_key_aiming_sec:  self.action_release_aiming()
+            case core.configuration.action_key_jump_sec:    self.action_release_jump()
+
+
+
+__all__ = ["Handle"]

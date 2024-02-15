@@ -11,14 +11,14 @@ class RaidenShogun (BaseRoleEvent):
     # 已测试
     role_name = "雷电将军"
 
-    cd_skills = 10
+    cd_skill = 10
     cd_burst = 18
 
     ces = "雷罚恶曜之眼"
     ceb = "梦想一心"
 
-    def press_skills(self):
-        self.co_cooldown.skills_set()
+    def press_skill(self):
+        self.co_cooldown.skill_set()
         self.co_effectside.set_effect(self.ces, 25 + 1.5)
 
     def press_burst(self):

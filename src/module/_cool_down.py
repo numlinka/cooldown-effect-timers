@@ -144,19 +144,19 @@ class CoolDown (object):
     def __init__(self):
         self.clock_signal = threading.Event()
 
-        self.cd2u_skills: dict[int: CoolDownDataUnit] = {index: CoolDownDataUnit() for index in range(1, 5)}
+        self.cd2u_skill: dict[int: CoolDownDataUnit] = {index: CoolDownDataUnit() for index in range(1, 5)}
         self.cd2u_burst: dict[int: CoolDownDataUnit] = {index: CoolDownDataUnit() for index in range(1, 5)}
 
-        self.cd2u_skills_lst: list[CoolDownDataUnit] = [self.cd2u_skills[x] for x in self.cd2u_skills]
+        self.cd2u_skill_lst: list[CoolDownDataUnit] = [self.cd2u_skill[x] for x in self.cd2u_skill]
         self.cd2u_burst_lst: list[CoolDownDataUnit] = [self.cd2u_burst[x] for x in self.cd2u_burst]
 
         self.task = threading.Thread(None, self.mainloop, "Cooldown", (), daemon=True)
 
 
-    # ================================ skills ================================
+    # ================================ skill ================================
 
 
-    def set_skills_cd(self, second: int | float, serial: int = ...):
+    def set_skill_cd(self, second: int | float, serial: int = ...):
         """
         ## 设置 元素战技 剩余冷却时间
 
@@ -164,10 +164,10 @@ class CoolDown (object):
         serial: 指定角色序号 若为空则自动获取当前前台角色的序号
         """
         if serial is Ellipsis: serial = module.roleserial.get()
-        self.cd2u_skills[serial].set_value(second)
+        self.cd2u_skill[serial].set_value(second)
 
 
-    def set_skills_max_cd(self, second: int | float, serial: int = ...):
+    def set_skill_max_cd(self, second: int | float, serial: int = ...):
         """
         ## 设置 元素战技 最大冷却时间
 
@@ -177,10 +177,10 @@ class CoolDown (object):
         serial: 指定角色序号 若为空则自动获取当前前台角色的序号
         """
         if serial is Ellipsis: serial = module.roleserial.get()
-        self.cd2u_skills[serial].set_max_value(second, True)
+        self.cd2u_skill[serial].set_max_value(second, True)
 
 
-    def skills_set(self, serial: int = ..., second: int | float = ...):
+    def skill_set(self, serial: int = ..., second: int | float = ...):
         """
         ## 元素战技 置位
 
@@ -190,10 +190,10 @@ class CoolDown (object):
         second: 若提供该参数则设置最大冷却时间后置位
         """
         if serial is Ellipsis or serial == 0: serial = module.roleserial.get()
-        self.cd2u_skills[serial].set(second)
+        self.cd2u_skill[serial].set(second)
 
 
-    def skills_is_ready(self, serial: int = ...) -> bool:
+    def skill_is_ready(self, serial: int = ...) -> bool:
         """
         ## 元素战技 是否就绪
 
@@ -203,7 +203,7 @@ class CoolDown (object):
         serial: 指定角色序号 若为空则自动获取当前前台角色的序号
         """
         if serial is Ellipsis: serial = module.roleserial.get()
-        return self.cd2u_skills[serial].is_ready()
+        return self.cd2u_skill[serial].is_ready()
 
 
     # ================================ burst ================================
@@ -268,12 +268,12 @@ class CoolDown (object):
 
         重置所有冷却时间
         """
-        [unit.clear() for unit in self.cd2u_skills_lst]
+        [unit.clear() for unit in self.cd2u_skill_lst]
         [unit.clear() for unit in self.cd2u_burst_lst]
 
 
     def _looptask(self):
-        [unit.decrease() for unit in self.cd2u_skills_lst]
+        [unit.decrease() for unit in self.cd2u_skill_lst]
         # [unit.decrease() for unit in self.cd2uburst]
         window.cooldown.canvas_update()
 

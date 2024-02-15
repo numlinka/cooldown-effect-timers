@@ -11,7 +11,7 @@ import window
 
 
 def save_configuration():
-    configuration._save_json(env.cwd.sldata.configuration)
+    configuration._save_json(env.cwd.assets.configuration)
 
 
 def run():

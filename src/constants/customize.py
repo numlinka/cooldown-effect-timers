@@ -60,7 +60,7 @@ LUAROLE = """cooldown-effect-timers - customize.lua
 
 使用 lua 脚本实现的角色事件的步骤如下
 
-在 .sldata\customize\lua 目录下创建一个文件
+在 assets\customize\lua 目录下创建一个文件
 文件名为角色事件的名称
 文件后缀名为 .lua
 例如角色事件名为 "胡桃"
@@ -71,15 +71,15 @@ LUAROLE = """cooldown-effect-timers - customize.lua
 你可以选择性的提供以下属性 ( 变量 )
 
 role_name = "胡桃", -- 角色名称 ( 不写也行，默认为文件名 )
-cd_skills = 16, -- 元素技能冷却时间 ( 秒 )
+cd_skill = 16, -- 元素技能冷却时间 ( 秒 )
 cd_burst = 15, -- 元素爆发 ( 秒 )
 
 选择性的提供以下函数
 
 switch_in() -- 角色进入 ( 切换到该角色 ) 时
 switch_out() -- 角色离开 ( 切换到其他角色 ) 时
-press_skills() -- 按下 ( 点击 ) 元素技能 ( 按键 ) 时
-release_skills() -- 松开 ( 释放 ) 元素技能 ( 按键 ) 时
+press_skill() -- 按下 ( 点击 ) 元素技能 ( 按键 ) 时
+release_skill() -- 松开 ( 释放 ) 元素技能 ( 按键 ) 时
 press_burst() -- 按下 ( 点击 ) 元素爆发 ( 按键 ) 时
 release_burst() -- 松开 ( 释放 ) 元素爆发 ( 按键 ) 时
 
@@ -91,7 +91,6 @@ https://cooldown-effect-timers.numlinka.com/#/customize/lua
 
 当然，你可以使用其他人提供的 lua 脚本
 但要注意，使用前请检查其安全性
-
 
 
 """

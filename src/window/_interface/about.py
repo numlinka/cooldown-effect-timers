@@ -20,5 +20,5 @@ class About (object):
         self.wsb_about = ttkbootstrap.Scrollbar(self.wtt_about, orient=VERTICAL, command=self.wtt_about.yview)
         self.wtt_about.configure(yscrollcommand=self.wsb_about.set)
 
-        self.wtt_about.bind("<Enter>", lambda *_: self.wsb_about.pack(side="right", fill="y"), "+")
+        self.wtt_about.bind("<Enter>", lambda *_: self.wsb_about.pack(side=RIGHT, fill=Y), "+")
         self.wtt_about.bind("<Leave>", lambda *_: self.wsb_about.pack_forget(), "+")

@@ -77,7 +77,7 @@ class CoolDownWindow (object):
              
 
     def canvas_update(self):
-        for index, unit in enumerate(module.cooldown.cd2u_skills_lst):
+        for index, unit in enumerate(module.cooldown.cd2u_skill_lst):
             site = self.anchorpoint.coordinates(index)
             schedule = 100 - int(100 * unit.now / unit.max) if unit.max != 0 else 100
 

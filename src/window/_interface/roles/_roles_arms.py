@@ -9,6 +9,8 @@ from ttkbootstrap.constants import *
 # local
 import core
 import module
+import window
+import widgets
 from window import method
 
 
@@ -26,8 +28,8 @@ class RolesArms (object):
         self.wfe_arms = ttkbootstrap.Frame(self.wfe)
         self.wcb_role = ttkbootstrap.Combobox(self.wfe_role, state=READONLY, width=1)
         self.wcb_arms = ttkbootstrap.Combobox(self.wfe_arms, state=READONLY, width=1)
-        self.wbn_role = ttkbootstrap.Button(self.wfe_role, bootstyle="outline", text="+")
-        self.wbn_arms = ttkbootstrap.Button(self.wfe_arms, bootstyle="outline", text="+")
+        self.wbn_role = ttkbootstrap.Button(self.wfe_role, bootstyle=OUTLINE, text="+", command=self.choice_role)
+        self.wbn_arms = ttkbootstrap.Button(self.wfe_arms, bootstyle=OUTLINE, text="+")
 
         self.wll.pack(side=LEFT, padx=0)
         self.wfe_role.pack(side=LEFT, fill=X, expand=True, padx=(5, 0))
@@ -43,6 +45,9 @@ class RolesArms (object):
         method.combobox_do_not_want_selection(self.wcb_role)
         method.combobox_do_not_want_selection(self.wcb_arms)
 
+
+    def initial(self):
+        self.wcb_role.config(values=[x for x in module.roles.roles_table])
 
 
     def final_initial(self):
@@ -70,6 +75,13 @@ class RolesArms (object):
         except Exception as _:
             dialogs.Messagebox.show_error(title="角色事件错误", message=f"角色 [{self.serial}] \"{name}\"\n加载失败")
             self.wcb_role.set(self.v_role)
+
+
+    def choice_role(self, *_):
+        rules = [x for x in module.roles.roles_table]
+        result = widgets.choicelistbox("角色选择", rules, parent=window.mainwindow)
+        if not result: return
+        self.set_role(name=result)
 
 
     def set_arms(self, *_, name: str =...):

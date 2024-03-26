@@ -16,6 +16,7 @@ from constants import *
 
 # self
 from . import method
+from . import update
 from ._cooldown import CoolDownWindow
 from ._effect_side import EffectSideWindow
 from ._interface import Interface
@@ -32,15 +33,6 @@ window_effectside = ttkbootstrap.Toplevel()
 cooldown: CoolDownWindow
 effectside: EffectSideWindow
 interface: Interface
-
-
-def disable(*_):
-    end_date = "2024-04-01"
-    end_stamp = int(time.mktime(time.strptime(end_date, "%Y-%m-%d")))
-    now_stamp = int(time.time())
-    if end_stamp > now_stamp: return
-    dialogs.Messagebox.show_info(title="版本弃用", message="当前程序为测试版\n请下载更新的版本")
-    sys.exit(1)
 
 
 def initial():
@@ -77,7 +69,7 @@ def initial():
 
     interface.initial()
     mainwindow.after(100, final_initial)
-    mainwindow.after(1000, disable)
+    mainwindow.after(1000, update.check)
 
 
 def final_initial():

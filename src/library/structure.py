@@ -41,7 +41,7 @@ class DirectoryPlus (str):
 
     # own original value, You can assign a value to this property when you are too lazy to instantiate the class.
     # 自身原始值, 当你懒得实例化这个类时可以为这个属性赋值.
-    _self_value_ = None
+    _value_ = None
 
     # I rarely write line-by-line comments for code, but this is an exception.
     # 我很少为代码逐行写注释, 但这是一个例外.
@@ -69,7 +69,7 @@ class DirectoryPlus (str):
 
             # Get the _self_value of the class. If it is not a string, use the class name of the class.
             # 获取到该类的 _self_value, 若不是字符串则使用该类的类名.
-            csname = value._self_value_ if value._self_value_ and isinstance(value._self_value_, str) else value.__name__
+            csname = value._value_ if value._value_ and isinstance(value._value_, str) else value.__name__
 
             # Calculate target path.
             # 计算目标路径.
@@ -78,7 +78,7 @@ class DirectoryPlus (str):
             # Instantiate this class and replace its own properties.
             # 实例化该类并替换自身的属性.
             new_value = value(target)
-            new_value._self_value_ = csname
+            new_value._value_ = csname
             super().__setattr__(__name, new_value)
             result = new_value
 
@@ -104,11 +104,11 @@ class DirectoryPlus (str):
         elif isinstance(value, DirectoryPlus):
             # If the value's _self_value attribute is not a string, then its assigned value is itself.
             # 如果该值的 _self_value 属性不是字符串, 那么赋值为它本身.
-            if not isinstance(value._self_value_, str): value._self_value_ = value
+            if not isinstance(value._value_, str): value._value_ = value
 
             # Keep the _self_value attribute of the value, maybe it will be useful.
             # 保留该值的 _self_value 属性,也许会有用.
-            orname = value._self_value_
+            orname = value._value_
 
             # Calculate target path.
             # 计算目标路径.
@@ -126,7 +126,7 @@ class DirectoryPlus (str):
 
                 # Assign _self_value to the new value to avoid calculation errors next time.
                 # 将 _self_value 赋给新值, 避免下次计算错误.
-                new_value._self_value_ = orname
+                new_value._value_ = orname
 
                 # Replace own properties with new values.
                 # 使用新值替换自身的属性.

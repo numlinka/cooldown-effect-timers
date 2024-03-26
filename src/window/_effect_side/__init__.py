@@ -17,8 +17,8 @@ COLOR = "white"
 
 
 class EffectSideWindow (object):
-    def __init__(self, master: ttkbootstrap.Toplevel):
-        self.master = master
+    def __init__(self, window: ttkbootstrap.Toplevel):
+        self.window = window
         self.toggle = "odd"
         self.mode = core.configuration.window_effectside_mode
         self.amount = core.configuration.window_effectside_amount
@@ -33,11 +33,11 @@ class EffectSideWindow (object):
 
 
     def initial(self):
-        self.canvas = ttkbootstrap.Canvas(self.master, background=TRANSPARENTCOLOR)
+        self.canvas = ttkbootstrap.Canvas(self.window, background=TRANSPARENTCOLOR)
         self.canvas.pack(fill="both", expand=True)
 
         self.set_amount(self.amount)
-        window.method.motion_window_by_canvas(self.master, self.canvas, "motion", self.update_configuration)
+        window.method.motion_window_by_canvas(self.window, self.canvas, "motion", self.update_configuration)
 
 
     def _kwds_base(self) -> dict:
@@ -195,7 +195,7 @@ class EffectSideWindow (object):
                 height = 10 + 60
                 self.anchorpoint = AnchorPoint((10, 10), (60, 230), (60, 230))
 
-        self.master.geometry(f"{width}x{height}")
+        self.window.geometry(f"{width}x{height}")
         self.canvas.delete("base")
         self.canvas.delete("baseline")
         self.canvas.create_rectangle(0, 0, width, height, **self._kwds_base())
@@ -235,7 +235,6 @@ class EffectSideWindow (object):
 
         else:
             self.canvas.delete("baseline")
-
 
 
     def moving_blocks(self, value: bool = True):

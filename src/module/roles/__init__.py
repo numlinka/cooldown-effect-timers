@@ -17,6 +17,7 @@ roles_table: dict[str: BaseRoleEvent] = {}
 
 def initial():
     global roles_table
+    roles_table = {}
 
     roles_table.clear()
     modlst = [

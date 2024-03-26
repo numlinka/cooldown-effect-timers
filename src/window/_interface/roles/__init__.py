@@ -8,6 +8,7 @@ from ttkbootstrap.constants import *
 
 # local
 import env
+import module
 
 # self
 from ._roles_arms import RolesArms
@@ -39,13 +40,21 @@ class Roles (object):
         self.wll_look_help.pack(side=LEFT, fill=X)
         self.wll_afdian.pack(side=RIGHT, fill=X)
 
-        self.wbn_load = ttkbootstrap.Button(self.wfe_save, bootstyle="outline", text="加载预设配队", command=LoadFormation)
-        self.wbn_save = ttkbootstrap.Button(self.wfe_save, bootstyle="outline", text="保存当前配队", command=SaveFormation)
+        self.wbn_load = ttkbootstrap.Button(self.wfe_save, bootstyle=OUTLINE, text="加载预设配队", command=LoadFormation)
+        self.wbn_save = ttkbootstrap.Button(self.wfe_save, bootstyle=OUTLINE, text="保存当前配队", command=SaveFormation)
+        self.wbn_refresh = ttkbootstrap.Button(self.wfe_save, bootstyle=(OUTLINE, INFO), text="刷新脚本列表", command=self.refresh)
         self.wbn_load.pack(side=RIGHT, fill=X)
         self.wbn_save.pack(side=RIGHT, fill=X, padx=(0, 5))
+        self.wbn_refresh.pack(side=LEFT, fill=X, padx=(0, 5))
 
         self.lst_wras = [self.wra_1, self.wra_2, self.wra_3, self.wra_4]
         self.wll_afdian.bind("<Button-1>", lambda _: webbrowser.open(env.AFDIAN), True)
+
+
+    def refresh(self):
+        module.roles.initial()
+        for wra in self.lst_wras:
+            wra.initial()
 
 
     def final_initial(self):

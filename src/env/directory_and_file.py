@@ -13,7 +13,7 @@ current_working_directory = os.getcwd()
 
 class __cwd (DirectoryPlus):
     class assets (DirectoryPlus):
-        _self_value_ = "assets"
+        _value_ = "assets"
         formation = "formation"
 
         class customize (DirectoryPlus):
